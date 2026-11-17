@@ -20,12 +20,11 @@ function createWindow() {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     },
-    icon: path.join(__dirname, 'icon.ico'),
-    show: false
+    show: true
   });
 
   mainWindow.loadFile('index.html');
-  mainWindow.once('ready-to-show', () => mainWindow.show());
+  mainWindow.focus();
 }
 
 app.whenReady().then(createWindow);
