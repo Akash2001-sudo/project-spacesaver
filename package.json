@@ -5,11 +5,24 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win"
+    "build": "electron-builder --win",
+    "dist": "electron-builder --win --publish never"
   },
   "author": "SpaceSaver",
   "license": "MIT",
+  "build": {
+    "appId": "com.spacesaver.app",
+    "productName": "SpaceSaver",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "signAndEditExecutable": false
+    }
+  },
   "devDependencies": {
-    "electron": "^28.0.0"
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.0"
   }
 }
