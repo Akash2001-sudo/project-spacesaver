@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpaceSaver</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════ Custom Title Bar ═══════ -->
+  <div class="titlebar" id="titlebar">
+    <div class="titlebar-left">
+      <div class="app-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="2">
+          <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6C63FF"/><stop offset="100%" style="stop-color:#00D2FF"/></linearGradient></defs>
+          <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+          <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+          <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+          <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <span class="titlebar-title">SpaceSaver</span>
+    </div>
+    <div class="titlebar-controls">
+      <button class="tb-btn tb-min" onclick="api.minimize()" title="Minimize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="5.5" width="10" height="1" fill="currentColor"/></svg>
+      </button>
+      <button class="tb-btn tb-max" onclick="api.maximize()" title="Maximize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      </button>
+      <button class="tb-btn tb-close" onclick="api.close()" title="Close">
+        <svg width="12" height="12" viewBox="0 0 12 12"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════ Main Container ═══════ -->
+  <div class="main-container">
+
+    <!-- ── Sidebar ── -->
+    <nav class="sidebar">
+      <div class="nav-section">
+        <div class="nav-item active" data-page="home" onclick="showPage('home')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home</span>
+        </div>
+        <div class="nav-item" data-page="cleanup" onclick="showPage('cleanup')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          <span>Cleanup</span>
+        </div>
+        <div class="nav-item" data-page="organize" onclick="showPage('organize')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+          <span>Organize</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── Page Content ── -->
+    <div class="content">
+
+      <!-- ═══ HOME PAGE ═══ -->
+      <div class="page active" id="page-home">
+        <div class="hero">
+          <div class="hero-icon">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="url(#heroGrad)" stroke-width="1.5">
+              <defs><linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6C63FF"/><stop offset="100%" style="stop-color:#00D2FF"/></linearGradient></defs>
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+              <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+              <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+              <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h1 class="hero-title">Welcome to <span class="gradient-text">SpaceSaver</span></h1>
+          <p class="hero-subtitle">Reclaim your disk space and organize your files with intelligence</p>
+
+          <div class="folder-picker">
+            <button class="btn btn-primary btn-lg" onclick="selectFolder()">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 11 15 14"/></svg>
+              Choose a Folder
+            </button>
+            <div class="selected-folder" id="selectedFolderDisplay" style="display:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6C63FF" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              <span id="folderPathText"></span>
+            </div>
+          </div>
+
+          <div class="feature-cards">
+            <div class="feature-card" onclick="showPage('cleanup')">
+              <div class="feature-icon cleanup-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </div>
+              <h3>Smart Cleanup</h3>
+              <p>Find and remove junk files, duplicates, and large unused files to free up space</p>
+            </div>
+            <div class="feature-card" onclick="showPage('organize')">
+              <div class="feature-icon organize-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              </div>
+              <h3>File Organizer</h3>
+              <p>Sort your files by type — images, videos, software, documents and more</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CLEANUP PAGE ═══ -->
+      <div class="page" id="page-cleanup">
+        <div class="page-header">
+          <div>
+            <h2>Smart Cleanup</h2>
+            <p class="page-desc" id="cleanupFolderLabel">Select a folder from Home to begin scanning</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline" onclick="showPage('home')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button class="btn btn-primary" id="scanBtn" onclick="startScan()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Scan Folder
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-section" id="scanProgress" style="display:none;">
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="scanProgressBar"></div>
+          </div>
+          <div class="progress-info">
+            <span id="scanProgressText">Scanning files...</span>
+            <button class="btn btn-danger btn-sm" onclick="cancelCurrentOperation()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              Stop
+            </button>
+          </div>
+        </div>
+
+        <!-- Scan Results -->
+        <div id="scanResults" style="display:none;">
+          <!-- Summary Cards -->
+          <div class="summary-grid" id="summaryGrid"></div>
+
+          <!-- Tabs -->
+          <div class="tabs">
+            <button class="tab active" data-tab="junk" onclick="showTab('junk')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+              Junk Files
+            </button>
+            <button class="tab" data-tab="large" onclick="showTab('large')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+              Large Files
+            </button>
+            <button class="tab" data-tab="duplicates" onclick="showTab('duplicates')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="2" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Duplicates
+            </button>
+          </div>
+
+          <!-- File lists -->
+          <div class="file-list-container">
+            <div class="file-list-header">
+              <label class="checkbox-label">
+                <input type="checkbox" id="selectAllCleanup" onchange="toggleSelectAll('cleanup')">
+                <span>Select All</span>
+              </label>
+              <button class="btn btn-danger" id="deleteSelectedBtn" onclick="deleteSelected()" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                Delete Selected
+              </button>
+            </div>
+            <div class="file-list" id="cleanupFileList"></div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="cleanupEmpty">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4a4a6a" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <p>Select a folder and scan to find files you can clean up</p>
+        </div>
+      </div>
+
+      <!-- ═══ ORGANIZE PAGE ═══ -->
+      <div class="page" id="page-organize">
+        <div class="page-header">
+          <div>
+            <h2>File Organizer</h2>
+            <p class="page-desc" id="organizeFolderLabel">Sort your files into neat folders by type</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline" onclick="showPage('home')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button class="btn btn-primary" id="organizeBtn" onclick="startOrganize()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              Organize Files
+            </button>
+          </div>
+        </div>
+
+        <!-- Organize progress -->
+        <div class="progress-section" id="organizeProgress" style="display:none;">
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="organizeProgressBar"></div>
+          </div>
+          <div class="progress-info">
+            <span id="organizeProgressText">Organizing files...</span>
+            <button class="btn btn-danger btn-sm" onclick="cancelCurrentOperation()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              Stop
+            </button>
+          </div>
+        </div>
+
+        <!-- Category selectors -->
+        <div id="organizeContent" style="display:none;">
+          <div class="organize-categories" id="organizeCategories"></div>
+        </div>
+
+        <div class="empty-state" id="organizeEmpty">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4a4a6a" stroke-width="1.5"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+          <p>Select a folder from Home, then come here to organize files by type</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════ Disclaimer Modal ═══════ -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal" id="disclaimerModal">
+      <div class="modal-icon warning">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FFB800" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <h3 id="modalTitle">Disclaimer</h3>
+      <p id="modalMessage">Are you sure you want to proceed?</p>
+      <div class="modal-details" id="modalDetails"></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-danger" id="modalConfirmBtn" onclick="confirmModalAction()">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ Toast Notifications ═══════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
